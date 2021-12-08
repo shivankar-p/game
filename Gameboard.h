@@ -2,15 +2,15 @@
 #define objhdr
 #include "Game.h"
 
-class GameObject
+class Gameboard
 {
     private:
         int x, y;
         SDL_Texture* obtex;
         SDL_Rect src, dst;
     public:
-        GameObject(const char* texsheet, int inx, int iny);
-        ~GameObject();
+        Gameboard(const char* texsheet, int inx, int iny);
+        ~Gameboard();
         void update();
         void render();
 };

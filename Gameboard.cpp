@@ -1,19 +1,19 @@
-#include "GameObject.h"
+#include "Gameboard.h"
 #include "TexManager.h"
 
-GameObject::GameObject(const char* texsheet, int inx, int iny)
+Gameboard::Gameboard(const char* texsheet, int inx, int iny)
 {
     obtex = TexManager::Load(texsheet);
     x = inx;
     y = iny;
 }
 
-void GameObject::update()
+void Gameboard::update()
 {
-    x++;
-    y++;
-    src.h = 32;
-    src.w = 32;
+    //x++;
+    y+=3;
+    src.h = 64;
+    src.w = 64;
     src.x = 0;src.y = 0;
     dst.x = x;
     dst.y = y;
@@ -21,7 +21,7 @@ void GameObject::update()
     dst.h = src.h*2;
 }
 
-void GameObject::render()
+void Gameboard::render()
 {
     SDL_RenderCopy(Game::renderer, obtex,nullptr, &dst);
 }

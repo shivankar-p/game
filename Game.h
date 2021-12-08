@@ -14,6 +14,7 @@ class Game
         SDL_Texture *tex;
         SDL_Rect src, dst;
         int cnt = 0;
+        int shtfg = 0;
     public:
         Game();
         ~Game();

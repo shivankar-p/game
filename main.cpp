@@ -12,7 +12,7 @@ int main(int argc, char **argv)
     Uint32 framestart;
     int frametime;
 
-    game->init("Archery", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, false);
+    game->init("Archery", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1300, 800, false);
     while(game->running())
     {
         framestart = SDL_GetTicks();
