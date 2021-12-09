@@ -10,8 +10,8 @@ Gameboard::Gameboard(const char* texsheet, int inx, int iny)
 
 void Gameboard::update()
 {
-    //x++;
-    y+=3;
+    y += 5;
+    if(y > 800)   y = 0;
     src.h = 64;
     src.w = 64;
     src.x = 0;src.y = 0;
@@ -23,6 +23,11 @@ void Gameboard::update()
 
 void Gameboard::render()
 {
-    SDL_RenderCopy(Game::renderer, obtex,nullptr, &dst);
+    SDL_RenderCopy(Game::renderer, obtex, nullptr, &dst);
+}
+
+int Gameboard::gety()
+{
+    return y;
 }
 

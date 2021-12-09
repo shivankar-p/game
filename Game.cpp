@@ -2,12 +2,13 @@
 #include "SDL_image.h"
 #include "TexManager.h"
 #include "Gameboard.h"
+#include "bg.h"
 #include "Arrow.h"
 
+SDL_Renderer* Game::renderer = nullptr;
 Gameboard* board;
 Arrow* arro;
-
-SDL_Renderer* Game::renderer = nullptr;
+Background* bg;
 
 
 
@@ -27,50 +28,48 @@ void Game :: init(const char* title, int x, int y, int w, int h, bool fullscrn)
     if(SDL_Init(SDL_INIT_EVERYTHING) == 0)
     {
         window = SDL_CreateWindow(title, x, y, w, h, flags);
+        /*sur = SDL_GetWindowSurface(window);
+        bg = SDL_LoadBMP("img/background.png");
+        SDL_BlitSurface(bg, nullptr, sur, nullptr);
+        SDL_UpdateWindowSurface(window);
+        SDL_FreeSurface(bg);*/
+
         renderer = SDL_CreateRenderer(window, -1, 0);
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         is_running = true;
+
     }
     else
     {
         is_running = false;
     }
 
-    /* CreateSDL_Surface* sur = IMG_Load("img/target.png");
+    /*CreateSDL_Surface* sur = IMG_Load("img/target.png");
     tex = SDL_CreateTextureFromSurface(renderer, sur);
     SDL_FreeSurface(sur);*/
-    board = new Gameboard("img/250.png", 1210, 0);
-    tex = TexManager::Load("img/250.png");
+    bg = new Background("img/background.png", 0, 0);
+    board = new Gameboard("img/singlecz.png", 1216, 0);
+    //tex = TexManager::Load("img/singlecz.png");
 
-    arro = new Arrow("img/arrow.png", 50, 600);
+    arro = new Arrow("img/arrow.png", 50, 350);
 }
 
 void Game :: update()
 {
-    board->update();
-    SDL_Event shoot;
-    if(shtfg == 0)
-    {
-        while( SDL_PollEvent(&shoot))
-        {
-            switch(shoot.type)
-            {
-            case SDL_KEYUP:
-                shtfg = 1;
-                break;
-            }
-        }
-    }
-    cout << shtfg << endl;
-    if(shtfg == 1) arro->update();
+    bg->update();
+    if(shtfg == 0) board->update();
+    if(shtfg)   arro->update(board->gety(), &miss, &score);
 }
 
 void Game :: render()
 {
     SDL_RenderClear(renderer);
     //SDL_RenderCopy(renderer, tex, nullptr , &dst);
+    bg->render();
     board->render();
     arro->render();
+   
+
     SDL_RenderPresent(renderer);
 }
 
@@ -89,6 +88,35 @@ void Game :: handle_events()
     {
         case SDL_QUIT:
             is_running = false;
+            break;
+        case SDL_KEYDOWN:
+            if(event.key.keysym.sym==SDLK_SPACE)
+            {
+                shtfg = 1;
+            }
+            else if(event.key.keysym.sym==SDLK_RIGHT)
+            {
+                board = new Gameboard("img/singlecz.png", 1216, 0);
+                arro = new Arrow("img/arrow.png", 50, 350);
+                cnt++;
+                shtfg = 0;
+                cout << miss << endl;
+                if(miss == 3)
+                {
+                    cout << "chances exceeded " << score << endl;
+                    SDL_DestroyRenderer(renderer);
+                    SDL_DestroyWindow(window);
+                    SDL_Quit();
+                }
+
+                if(cnt == 5)
+                {
+                    cout << "out of arrows " << score << endl;
+                    SDL_DestroyRenderer(renderer);
+                    SDL_DestroyWindow(window);
+                    SDL_Quit();
+                }
+            }
             break;
         default:
             break;
