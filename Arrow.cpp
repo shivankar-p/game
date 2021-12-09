@@ -15,42 +15,52 @@ Arrow::Arrow(const char* texsheet, int inx, int iny)
     dst.h = src.h*2;
 }
 
-void Arrow::update(int pos, int* miss, int* scr)
+void Arrow::update(int pos, int* miss, int* scr, int* cnt)
 {
-    if(x+15 < 1140)  x += 15;
+    if(x+15 < 1140)
+    {
+        x += 15;
+        if(x == 65) *cnt = *cnt+1;
+        cout << *cnt << endl; 
+    }
     else
     {
-        if(x >= 1140)   return;
+        //if(x >= 1140)   return;
         int brdpos = pos;
         if(brdpos < 308 || brdpos > 410)
         {
             cout << "miss" << endl;
-            *miss = *miss+1;
-            while(x < 1300) x+=5;
+            if(x < 1140)
+            {
+                *miss = *miss+1;
+                x = 1140;
+            }
+            x += 1;
         }
         else if(brdpos <= 320 || brdpos >= 398)
         {
             cout << "Black" << endl;
+            if(x < 1173)    *scr += 4;
             x = 1173;
-            *scr += 4;
+            
         }
         else if(brdpos <= 336 || brdpos >= 382)
         {
             cout << "Blue" << endl;
+            if(x < 1162) *scr += 6;
             x = 1162;
-            *scr += 6;
         }
         else if(brdpos <= 348 || brdpos >= 366)
         {
             cout << "Red" << endl;
+            if(x < 1151) *scr += 8;
             x = 1151;
-            *scr += 8;
         }
         else
         {
             cout << "Yellow" << endl;
+            if(x < 1140) *scr += 10;
             x = 1140;
-            *scr += 10;
         }
 
     }

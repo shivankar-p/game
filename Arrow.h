@@ -11,7 +11,7 @@ class Arrow
     public:
         Arrow(const char* texsheet, int inx, int iny);
         ~Arrow();
-        void update(int pos, int* miss, int* scr);
+        void update(int pos, int* miss, int* scr, int* cnt);
         void render();
 };
 #endif

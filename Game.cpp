@@ -5,10 +5,12 @@
 #include "bg.h"
 #include "Arrow.h"
 #include "heart.h"
+#include "UpArrow.h"
 
 SDL_Renderer* Game::renderer = nullptr;
 Gameboard* board;
 Arrow* arro;
+UpArrow *u1, *u2, *u3, *u4, *u5;
 Background* bg;
 Heart *h1, *h2, *h3;
 
@@ -58,6 +60,13 @@ void Game :: init(const char* title, int x, int y, int w, int h, bool fullscrn)
     h1 = new Heart("img/heart.png", 0, 0);
     h2 = new Heart("img/heart.png", 70, 0);
     h3 = new Heart("img/heart.png", 140, 0);
+
+    u1 = new UpArrow("img/uparrow.png", 500, 0);
+    u2 = new UpArrow("img/uparrow.png", 570, 0);
+    u3 = new UpArrow("img/uparrow.png", 640, 0);
+    u4 = new UpArrow("img/uparrow.png", 710, 0);
+    u5 = new UpArrow("img/uparrow.png", 780, 0);
+
 }
 
 void Game :: update()
@@ -78,8 +87,40 @@ void Game :: update()
     {
         h1->update();
     }
+    
+    if(cnt == 0)
+    {
+        u1->update();
+        u2->update();
+        u3->update();
+        u4->update();
+        u5->update();
+    }
+    else if(cnt == 1)
+    {
+        u1->update();
+        u2->update();
+        u3->update();
+        u4->update();
+    }
+    else if(cnt == 2)
+    {
+        u1->update();
+        u2->update();
+        u3->update();
+    }
+    else if(cnt == 3)
+    {
+        u1->update();
+        u2->update();
+    }
+    else if(cnt == 4)
+    {
+        u1->update();
+    }
+
     if(shtfg == 0) board->update();
-    if(shtfg)   arro->update(board->gety(), &miss, &score);
+    if(shtfg)   arro->update(board->gety(), &miss, &score, &cnt);
 }
 
 void Game :: render()
@@ -101,6 +142,37 @@ void Game :: render()
     else if(miss == 2)
     {
         h1->render();
+    }
+
+    if(cnt == 0)
+    {
+        u1->render();
+        u2->render();
+        u3->render();
+        u4->render();
+        u5->render();
+    }
+    else if(cnt == 1)
+    {
+       u1->render();
+        u2->render();
+        u3->render();
+        u4->render();
+    }
+    else if(cnt == 2)
+    {
+        u1->render();
+        u2->render();
+        u3->render();
+    }
+    else if(cnt == 3)
+    {
+        u1->render();
+        u2->render();
+    }
+    else if(cnt == 4)
+    {
+        u1->render();
     }
     board->render();
     arro->render();
@@ -134,9 +206,8 @@ void Game :: handle_events()
             {
                 board = new Gameboard("img/singlecz.png", 1216, 0);
                 arro = new Arrow("img/arrow.png", 50, 350);
-                cnt++;
                 shtfg = 0;
-                cout << miss << endl;
+                cout << cnt << endl;
                 if(miss == 3)
                 {
                     cout << "chances exceeded " << score << endl;
