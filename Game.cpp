@@ -4,11 +4,14 @@
 #include "Gameboard.h"
 #include "bg.h"
 #include "Arrow.h"
+#include "heart.h"
 
 SDL_Renderer* Game::renderer = nullptr;
 Gameboard* board;
 Arrow* arro;
 Background* bg;
+Heart *h1, *h2, *h3;
+
 
 
 
@@ -52,11 +55,29 @@ void Game :: init(const char* title, int x, int y, int w, int h, bool fullscrn)
     //tex = TexManager::Load("img/singlecz.png");
 
     arro = new Arrow("img/arrow.png", 50, 350);
+    h1 = new Heart("img/heart.png", 0, 0);
+    h2 = new Heart("img/heart.png", 70, 0);
+    h3 = new Heart("img/heart.png", 140, 0);
 }
 
 void Game :: update()
 {
     bg->update();
+    if(miss == 0)
+    {
+        h1->update();
+        h2->update();
+        h3->update();
+    }
+    else if(miss == 1)
+    {
+        h1->update();
+        h2->update();
+    }
+    else if(miss == 2)
+    {
+        h1->update();
+    }
     if(shtfg == 0) board->update();
     if(shtfg)   arro->update(board->gety(), &miss, &score);
 }
@@ -66,6 +87,21 @@ void Game :: render()
     SDL_RenderClear(renderer);
     //SDL_RenderCopy(renderer, tex, nullptr , &dst);
     bg->render();
+    if(miss == 0)
+    {
+        h1->render();
+        h2->render();
+        h3->render();
+    }
+    else if(miss == 1)
+    {
+        h1->render();
+        h2->render();
+    }
+    else if(miss == 2)
+    {
+        h1->render();
+    }
     board->render();
     arro->render();
    
