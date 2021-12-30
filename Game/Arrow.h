@@ -1,6 +1,8 @@
 #ifndef arr
 #define arr
 #include "Game.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
 
 class Arrow
 {
@@ -11,7 +13,7 @@ class Arrow
     public:
         Arrow(const char* texsheet, int inx, int iny);
         ~Arrow();
-        void update(int pos, int* miss, int* scr, int* cnt);
+        void update(int pos, int* miss, int* scr, int *cnt);
         void render();
 };
 #endif

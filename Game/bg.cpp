@@ -1,3 +1,10 @@
+//
+//  bg.cpp
+//  Game
+//
+//  Created by Paras Vekariya on 09/12/21.
+//
+
 #include "bg.h"
 #include "TexManager.h"
 

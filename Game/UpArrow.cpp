@@ -1,3 +1,11 @@
+//
+//  UpArrow.cpp
+//  Game
+//
+//  Created by Paras Vekariya on 11/12/21.
+//
+
+#include <stdio.h>
 #include "UpArrow.h"
 #include "TexManager.h"
 
@@ -10,8 +18,6 @@ UpArrow::UpArrow(const char* texsheet, int inx, int iny)
 
 void UpArrow::update()
 {
-    //x+=6;
-    //y+=3;
     src.h = 64;
     src.w = 64;
     src.x = 0;src.y = 0;
@@ -19,7 +25,6 @@ void UpArrow::update()
     dst.y = y;
     dst.w = src.w;
     dst.h = src.h;
-    
 }
 
 void UpArrow::render()

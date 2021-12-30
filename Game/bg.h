@@ -1,3 +1,10 @@
+//
+//  bg.h
+//  Game
+//
+//  Created by Paras Vekariya on 11/12/21.
+//
+
 #ifndef bgrd
 #define bgrd
 #include "Game.h"

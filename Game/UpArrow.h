@@ -1,5 +1,13 @@
+//
+//  UpArrow.h
+//  Game
+//
+//  Created by Paras Vekariya on 11/12/21.
+//
+
 #ifndef uparr
 #define uparr
+
 #include "Game.h"
 
 class UpArrow
@@ -14,4 +22,5 @@ class UpArrow
         void update();
         void render();
 };
-#endif
+
+#endif /* UpArrow_h */

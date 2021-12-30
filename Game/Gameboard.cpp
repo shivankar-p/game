@@ -19,6 +19,15 @@ void Gameboard::update()
     dst.y = y;
     dst.w = src.w*2;
     dst.h = src.h*2;
+    //x++;
+//    y+=3;
+//    src.h = 64;
+//    src.w = 64;
+//    src.x = 0;src.y = 0;
+//    dst.x = x;
+//    dst.y = y;
+//    dst.w = src.w*2;
+//    dst.h = src.h*2;
 }
 
 void Gameboard::render()
@@ -30,4 +39,3 @@ int Gameboard::gety()
 {
     return y;
 }
-

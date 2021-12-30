@@ -1,5 +1,5 @@
 #include "TexManager.h"
-#include "SDL_image.h"
+#include "SDL2/SDL_image.h"
 
 SDL_Texture* TexManager::Load(const char* path)
 {

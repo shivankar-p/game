@@ -1,11 +1,12 @@
-#ifndef game_hdr
-#define game_hdr
+#ifndef gmdb
+#define gmdb
 
-#include<bits/stdc++.h>
-#include"SDL.h"
+#include<iostream>
+#include<vector>
 #include "Arrow.h"
 #include "Gameboard.h"
 #include "bg.h"
+#include "SDL2/SDL.h"
 
 using namespace std;
 
@@ -18,6 +19,13 @@ class Game
         SDL_Rect src, dst;
         int cnt = 0, miss = 0;
         int score = 0;
+
+//        bool is_running;
+//        SDL_Window *window;
+//        SDL_Texture *tex;
+//        SDL_Rect src, dst;
+//        int cnt = 0;
+//        int shtfg = 0;
     public:
         Game();
         ~Game();

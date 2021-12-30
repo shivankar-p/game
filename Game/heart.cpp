@@ -1,3 +1,11 @@
+//
+//  heart.cpp
+//  Game
+//
+//  Created by Paras Vekariya on 11/12/21.
+//
+
+#include <stdio.h>
 #include "heart.h"
 #include "TexManager.h"
 
