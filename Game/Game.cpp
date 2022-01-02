@@ -19,8 +19,8 @@ Arrow* arro;
 Background* bg;
 SDL_Renderer* Game::renderer = nullptr;
 UpArrow *u;
-Heart *h1, *h2, *h3;
-text *txt, *arrtxt, *gameover, *scr;
+Heart *h1, *h2, *h3, *rkey;
+text *txt, *arrtxt, *gameover, *scr, *ret, *rettext;
 
 
 Game :: Game ()
@@ -73,8 +73,10 @@ void Game :: init(const char* title, int x, int y, int w, int h, bool fullscrn)
         h3 = new Heart("img/heart.png", 140, 0);
 
         u = new UpArrow("img/uparrow.png", 630, 0);
-
+        rkey = new Heart("img/rkey.png", 600, 450);
         txt = new text("font/slkscrb.ttf", 50, ("SCORE:"+to_string(score)).c_str(), 0, 50, {0,0,0});
+        ret = new text("font/serif.ttf", 30, "Press", 500, 460, {0,0,0});
+        rettext = new text("font/serif.ttf", 30, "to Retry", 670, 460, {0,0,0});
         arrtxt = new text("font/slkscrb.ttf", 35, ("X"+to_string(5-cnt)).c_str(), 680, 20, {0,0,0});
 }
 
@@ -104,6 +106,7 @@ void Game :: update()
             if(shtfg)   arro->update(board->gety(), &miss, &score, &cnt);
             txt->update();
             arrtxt->update();
+            scr->update();
         }
         else
         {
@@ -111,6 +114,9 @@ void Game :: update()
             scr = new text("font/slkscrb.ttf", 50, ("SCORE:"+to_string(score)).c_str(), 500, 400, {0,0,0});
             gameover->update();
             scr->update();
+            ret->update();
+            rkey->update();
+            rettext->update();
         }
 }   
 
@@ -149,6 +155,9 @@ void Game :: render()
             scr = new text("font/slkscrb.ttf", 50, ("SCORE:"+to_string(score)).c_str(), 500, 400, {0,0,0});
             gameover->render();
             scr->render();
+            ret->render();
+            rkey->render();
+            rettext->render();
         }
        
 
@@ -207,6 +216,22 @@ void Game :: handle_events()
                         SDL_DestroyWindow(window);
                         SDL_Quit();*/
                     }
+                }
+                else if(event.key.keysym.sym==SDLK_r)
+                {
+                    cnt = 0;
+                    miss = 0;
+                    score = 0;
+                    shtfg = 0;
+                    board = new Gameboard("img/singlecz.png", 1216, 0);
+                    arro = new Arrow("img/arrow.png", 50, 350);
+                    txt = new text("font/slkscrb.ttf", 50, ("SCORE:"+to_string(score)).c_str(), 0, 50, {0,0,0});
+                    txt->update();
+                    txt->render();
+                    
+                    arrtxt = new text("font/slkscrb.ttf", 35, ("X"+to_string(5-cnt)).c_str(), 680, 20, {0,0,0});
+                    arrtxt->update();
+                    arrtxt->render();
                 }
                 break;
             default:
