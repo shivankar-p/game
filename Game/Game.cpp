@@ -16,11 +16,11 @@ using namespace std;
 Gameboard* board;
 Music se;
 Arrow* arro;
-Background* bg;
+Background *bg, *inst_bg;
 SDL_Renderer* Game::renderer = nullptr;
 UpArrow *u;
 Heart *h1, *h2, *h3, *rkey;
-text *txt, *arrtxt, *gameover, *scr, *ret, *rettext, *hiscr, *hsc_top_r;
+text *txt, *arrtxt, *gameover, *scr, *ret, *rettext, *hiscr, *hsc_top_r, *inst;
 
 
 Game :: Game ()
@@ -64,6 +64,7 @@ void Game :: init(const char* title, int x, int y, int w, int h, bool fullscrn)
 //    se.addsound("/Users/paras/Desktop/Game/Game/song/metal_gear_solid.mp3");
 //    se.addsound("/Users/paras/Desktop/Game/Game/song/naya_wala.mp3");
         bg = new Background("img/background.png", 0, 0);
+        inst_bg = new Background("img/instr.png", 0, 0);
         board = new Gameboard("img/singlecz.png", 1216, 0);
         //tex = TexManager::Load("img/singlecz.png");
 
@@ -84,7 +85,9 @@ void Game :: init(const char* title, int x, int y, int w, int h, bool fullscrn)
 
 void Game :: update()
 {
-    bg->update();
+    if(instfg == 1)
+    {
+        bg->update();
         if(miss == 0)
         {
             h1->update();
@@ -123,49 +126,61 @@ void Game :: update()
         }
         hsc_top_r = new text("font/lcd.ttf", 35, ("Highscore:"+to_string(mx)).c_str(), 950, 25, {0,0,0});
         hsc_top_r->update();
+    }
+    else
+    {
+        inst_bg->update();
+    }
 }   
 
 void Game :: render()
 {
         SDL_RenderClear(renderer);
         //SDL_RenderCopy(renderer, tex, nullptr , &dst);
-        bg->render();
-        if(miss == 0)
+        if(instfg == 1)
         {
-            h1->render();
-            h2->render();
-            h3->render();
-        }
-        else if(miss == 1)
-        {
-            h1->render();
-            h2->render();
-        }
-        else if(miss == 2)
-        {
-            h1->render();
-        }
+            bg->render();
+            if(miss == 0)
+            {
+                h1->render();
+                h2->render();
+                h3->render();
+            }
+            else if(miss == 1)
+            {
+                h1->render();
+                h2->render();
+            }
+            else if(miss == 2)
+            {
+                h1->render();
+            }
 
-        if(cnt <= 5 && miss < 3)
-        {
-            u->render();
-            board->render();
-            arro->render();
-            txt->render();
-            arrtxt->render();
+            if(cnt <= 5 && miss < 3)
+            {
+                u->render();
+                board->render();
+                arro->render();
+                txt->render();
+                arrtxt->render();
+            }
+            else
+            {
+                gameover = new text("font/slkscrb.ttf", 50,"GAME OVER", 450, 350, {255,0,0});
+                scr = new text("font/slkscrb.ttf", 50, ("SCORE:"+to_string(score)).c_str(), 500, 400, {0,0,0});
+                gameover->render();
+                scr->render();
+                if(hscorefg)   hiscr->render();
+                ret->render();
+                rkey->render();
+                rettext->render();
+            }
+            hsc_top_r->render();
         }
         else
         {
-            gameover = new text("font/slkscrb.ttf", 50,"GAME OVER", 450, 350, {255,0,0});
-            scr = new text("font/slkscrb.ttf", 50, ("SCORE:"+to_string(score)).c_str(), 500, 400, {0,0,0});
-            gameover->render();
-            scr->render();
-            if(hscorefg)   hiscr->render();
-            ret->render();
-            rkey->render();
-            rettext->render();
+            inst_bg->render();
         }
-        hsc_top_r->render();
        
 
         SDL_RenderPresent(renderer);
@@ -246,6 +261,11 @@ void Game :: handle_events()
                     arrtxt->update();
                     arrtxt->render();
                 }
+                else if(event.key.keysym.sym==SDLK_c)
+                {
+                    instfg = 1;
+                }
+
                 break;
             default:
                 break;
