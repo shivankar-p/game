@@ -34,9 +34,9 @@ void Arrow::update(int pos, int* miss, int* scr, int *cnt)
                 //cout << "miss" << endl;
                 if(x < 1140)
                 {
-                    *miss = *miss+1;
                     x = 1140;
-                    //arr_se.playmusic("song/hit.mp3", 2000);
+                    if(*miss < 2 && *cnt < 4) arr_se.playmusic("song/blow.mp3", 2000);
+                    *miss = *miss+1;
                     
                 }
                 //arr_se.playmusic("song/miss.mp3", 2000);
@@ -45,8 +45,11 @@ void Arrow::update(int pos, int* miss, int* scr, int *cnt)
             else if(brdpos <= 320 || brdpos >= 398)
             {
                 //cout << "Black" << endl;
-                if(x < 1173)    *scr = *scr + 4;
-                //arr_se.playmusic("song/hit.mp3", 2000);
+                if(x < 1173)
+                {
+                    *scr = *scr + 4;
+                    arr_se.playmusic("song/newhit.mp3", 1000);
+                }
                 //cout << *scr << endl;
                 x = 1173;
                 
@@ -54,23 +57,33 @@ void Arrow::update(int pos, int* miss, int* scr, int *cnt)
             else if(brdpos <= 336 || brdpos >= 382)
             {
                 //cout << "Blue" << endl;
-                if(x < 1162) *scr = *scr + 6;
-                //arr_se.playmusic("song/hit.mp3", 2000);
-                 //cout << *scr << endl;
+                if(x < 1162)
+                {
+                    *scr = *scr + 6;
+                    arr_se.playmusic("song/newhit.mp3", 100);
+                }
+                     //cout << *scr << endl;
                 x = 1162;
             }
             else if(brdpos <= 348 || brdpos >= 366)
             {
                 //cout << "Red" << endl;
-                if(x < 1151) *scr = *scr + 8;
+                if(x < 1151)
+                {
+                    *scr = *scr + 8;
+                    arr_se.playmusic("song/newhit.mp3", 100);
+                }
                  //cout << *scr << endl;
                 x = 1151;
             }
             else
             {
                 //cout << "Yellow" << endl;
-                if(x < 1140) *scr = *scr + 10;
-                //arr_se.playmusic("song/hit.mp3", 1000);
+                if(x < 1140)
+                {
+                    *scr = *scr + 10;
+                    arr_se.playmusic("song/newhit.mp3", 1000);
+                }
                  //cout << *scr << endl;
                 x = 1140;
             }

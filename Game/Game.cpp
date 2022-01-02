@@ -205,10 +205,10 @@ void Game :: handle_events()
             case SDL_KEYDOWN:
                 if(event.key.keysym.sym==SDLK_SPACE)
                 {
-                    /*if(!shtfg)
+                    if(!shtfg)
                     {
-                        se.playmusic("song/arrsht.mp3", 3000);
-                    }*/
+                        se.playmusic("song/arrsht.mp3", 500/3);
+                    }
                     cout << score << endl;
                     shtfg = 1;
                     //std::cout << "sound played" << "\n";

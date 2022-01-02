@@ -51,7 +51,7 @@ void Music::foo(const char* path, int del)
 {
     Mix_Music* t = Mix_LoadMUS(path);
     Mix_PlayMusic(t, -1);
-    std::cout<<("music is%s playing.\n");
+    std::cout<< path;
     if(Mix_PlayingMusic())
         std::cout<< "p\n";
     else
