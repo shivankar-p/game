@@ -20,7 +20,7 @@ Background* bg;
 SDL_Renderer* Game::renderer = nullptr;
 UpArrow *u;
 Heart *h1, *h2, *h3, *rkey;
-text *txt, *arrtxt, *gameover, *scr, *ret, *rettext;
+text *txt, *arrtxt, *gameover, *scr, *ret, *rettext, *hiscr, *hsc_top_r;
 
 
 Game :: Game ()
@@ -73,11 +73,13 @@ void Game :: init(const char* title, int x, int y, int w, int h, bool fullscrn)
         h3 = new Heart("img/heart.png", 140, 0);
 
         u = new UpArrow("img/uparrow.png", 630, 0);
-        rkey = new Heart("img/rkey.png", 600, 450);
+        rkey = new Heart("img/rkey.png", 600, 620);
         txt = new text("font/slkscrb.ttf", 50, ("SCORE:"+to_string(score)).c_str(), 0, 50, {0,0,0});
-        ret = new text("font/serif.ttf", 30, "Press", 500, 460, {0,0,0});
-        rettext = new text("font/serif.ttf", 30, "to Retry", 670, 460, {0,0,0});
+        ret = new text("font/serif.ttf", 30, "Press", 500, 630, {0,0,0});
+        rettext = new text("font/serif.ttf", 30, "to Retry", 670, 630, {0,0,0});
         arrtxt = new text("font/slkscrb.ttf", 35, ("X"+to_string(5-cnt)).c_str(), 680, 20, {0,0,0});
+        hiscr = new text("font/lcd.ttf", 35, "New Highscore!", 500, 450, {0,0,0});
+        hsc_top_r = new text("font/lcd.ttf", 35, ("Highscore:"+to_string(mx)).c_str(), 950, 25, {0,0,0});
 }
 
 void Game :: update()
@@ -114,10 +116,13 @@ void Game :: update()
             scr = new text("font/slkscrb.ttf", 50, ("SCORE:"+to_string(score)).c_str(), 500, 400, {0,0,0});
             gameover->update();
             scr->update();
+            if(hscorefg)   hiscr->update();
             ret->update();
             rkey->update();
             rettext->update();
         }
+        hsc_top_r = new text("font/lcd.ttf", 35, ("Highscore:"+to_string(mx)).c_str(), 950, 25, {0,0,0});
+        hsc_top_r->update();
 }   
 
 void Game :: render()
@@ -155,10 +160,12 @@ void Game :: render()
             scr = new text("font/slkscrb.ttf", 50, ("SCORE:"+to_string(score)).c_str(), 500, 400, {0,0,0});
             gameover->render();
             scr->render();
+            if(hscorefg)   hiscr->render();
             ret->render();
             rkey->render();
             rettext->render();
         }
+        hsc_top_r->render();
        
 
         SDL_RenderPresent(renderer);
@@ -207,10 +214,15 @@ void Game :: handle_events()
                         SDL_Quit();
                     }*/
 
-                    if(cnt == 5)
+                    if(cnt >= 5 || miss >= 3)
                     {
                         cout << "out of arrows " << score << endl;
                         cnt = 6;
+                        if(score > mx)
+                        {
+                            hscorefg = 1;
+                            mx = score;
+                        }
                         
                         /*SDL_DestroyRenderer(renderer);
                         SDL_DestroyWindow(window);
@@ -223,6 +235,7 @@ void Game :: handle_events()
                     miss = 0;
                     score = 0;
                     shtfg = 0;
+                    hscorefg = 0;
                     board = new Gameboard("img/singlecz.png", 1216, 0);
                     arro = new Arrow("img/arrow.png", 50, 350);
                     txt = new text("font/slkscrb.ttf", 50, ("SCORE:"+to_string(score)).c_str(), 0, 50, {0,0,0});

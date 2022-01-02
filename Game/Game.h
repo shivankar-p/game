@@ -19,6 +19,7 @@ class Game
         SDL_Rect src, dst;
         int cnt = 0, miss = 0;
         int score = 0;
+        int mx = 0, hscorefg = 0;
 
 //        bool is_running;
 //        SDL_Window *window;
