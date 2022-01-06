@@ -48,7 +48,7 @@ void Arrow::update(int pos, int* miss, int* scr, int *cnt)
                 if(x < 1173)
                 {
                     *scr = *scr + 4;
-                    arr_se.playmusic("song/newhit.mp3", 1000);
+                    arr_se.playmusic("song/newhit.mp3", 100);
                 }
                 //cout << *scr << endl;
                 x = 1173;
@@ -82,7 +82,7 @@ void Arrow::update(int pos, int* miss, int* scr, int *cnt)
                 if(x < 1140)
                 {
                     *scr = *scr + 10;
-                    arr_se.playmusic("song/newhit.mp3", 1000);
+                    arr_se.playmusic("song/newhit.mp3", 100);
                 }
                  //cout << *scr << endl;
                 x = 1140;
